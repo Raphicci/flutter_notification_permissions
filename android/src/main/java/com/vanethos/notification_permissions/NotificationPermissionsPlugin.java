@@ -14,7 +14,7 @@ import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.PluginRegistry.Registrar;
 
-public class NotificationPermissionsPlugin implements MethodChannel.MethodCallHandler, FlutterPlugin, {
+public class NotificationPermissionsPlugin implements MethodChannel.MethodCallHandler, FlutterPlugin {
   private static final String PERMISSION_GRANTED = "granted";
   private static final String PERMISSION_DENIED = "denied";
 

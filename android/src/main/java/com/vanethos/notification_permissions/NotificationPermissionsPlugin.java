@@ -22,7 +22,7 @@ public class NotificationPermissionsPlugin implements MethodChannel.MethodCallHa
 
   @Override
   public void onAttachedToEngine(FlutterPluginBinding binding) {
-    final MethodChannel channel = MethodChannel(binding.getBinaryMessenger(), "app_settings");
+    final MethodChannel channel = new MethodChannel(binding.getBinaryMessenger(), "app_settings");
     context = binding.getApplicationContext();
     channel.setMethodCallHandler(this);
   }

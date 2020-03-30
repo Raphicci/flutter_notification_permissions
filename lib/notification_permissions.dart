@@ -12,7 +12,8 @@ class NotificationPermissions {
       bool openSettings = true}) async {
     final map = iosSettings.toMap();
     map["openSettings"] = openSettings;
-    String status = await _channel.invokeMethod('requestNotificationPermissions', map);
+    String status =
+        await _channel.invokeMethod('requestNotificationPermissions', map);
     return _getPermissionStatus(status);
   }
 
@@ -20,6 +21,11 @@ class NotificationPermissions {
     final String status =
         await _channel.invokeMethod('getNotificationPermissionStatus');
     return _getPermissionStatus(status);
+  }
+
+  static Future<bool> isChannelImportant() async {
+    final bool isImportant = await _channel.invokeMethod('isChannelImportant');
+    return isImportant;
   }
 
   /// Gets the PermissionStatus from the channel Method

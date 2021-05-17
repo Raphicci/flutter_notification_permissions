@@ -1,3 +1,22 @@
+# 0.5.0
+
+* Adds null safety [anoop4real]
+
+# 0.4.8
+
+* Fixes iOS Privisional Status not opening [#30](https://github.com/Vanethos/flutter_notification_permissions/pull/30), 
+[DuncanKelbie]
+
+# 0.4.7
+
+* Adds iOS Provisional Status [#28](https://github.com/Vanethos/flutter_notification_permissions/pull/28), [DuncanKelbie]
+
+# 0.4.6
+* Fixes open android Settings via [#25](https://github.com/Vanethos/flutter_notification_permissions/pull/25) , [britannio]
+
+# 0.4.5
+* Fixes Android giving unknown permission error [Zazo032]
+
 # 0.4.4
 * Corrected the path to the license file in .podspec
 * Define CLANG module, so that the plugin can be used statically

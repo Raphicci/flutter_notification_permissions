@@ -12,15 +12,17 @@ class NotificationPermissions {
       bool openSettings = true}) async {
     final map = iosSettings.toMap();
     map["openSettings"] = openSettings;
-    String status =
+    String? status =
         await _channel.invokeMethod('requestNotificationPermissions', map);
-    return _getPermissionStatus(status);
+    // If we cant determine the status then pass unknown
+    return _getPermissionStatus(status ?? "unknown");
   }
 
   static Future<PermissionStatus> getNotificationPermissionStatus() async {
-    final String status =
+    final String? status =
         await _channel.invokeMethod('getNotificationPermissionStatus');
-    return _getPermissionStatus(status);
+    // If we cant determine the status then pass unknown
+    return _getPermissionStatus(status ?? "unknown");
   }
 
   static Future<bool> isChannelImportant() async {
@@ -38,13 +40,15 @@ class NotificationPermissions {
         return PermissionStatus.denied;
       case "granted":
         return PermissionStatus.granted;
+      case "provisional":
+        return PermissionStatus.provisional;
       default:
         return PermissionStatus.unknown;
     }
   }
 }
 
-enum PermissionStatus { granted, unknown, denied }
+enum PermissionStatus { granted, unknown, denied, provisional }
 
 class NotificationSettingsIos {
   const NotificationSettingsIos({
@@ -52,11 +56,11 @@ class NotificationSettingsIos {
     this.alert = true,
     this.badge = true,
   });
-
+  // if we cant find a value from map set it as false instead of null
   NotificationSettingsIos._fromMap(Map<String, bool> settings)
-      : sound = settings['sound'],
-        alert = settings['alert'],
-        badge = settings['badge'];
+      : sound = settings['sound'] ?? false,
+        alert = settings['alert'] ?? false,
+        badge = settings['badge'] ?? false;
 
   final bool sound;
   final bool alert;

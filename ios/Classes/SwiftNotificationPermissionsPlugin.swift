@@ -6,6 +6,7 @@ public class SwiftNotificationPermissionsPlugin: NSObject, FlutterPlugin {
   var permissionGranted:String = "granted"
   var permissionUnknown:String = "unknown"
   var permissionDenied:String = "denied"
+  var permissionProvisional:String = "provisional"
 
   public static func register(with registrar: FlutterPluginRegistrar) {
       let channel = FlutterMethodChannel(name: "notification_permissions", binaryMessenger: registrar.messenger())
@@ -17,7 +18,7 @@ public class SwiftNotificationPermissionsPlugin: NSObject, FlutterPlugin {
       if (call.method == "requestNotificationPermissions") {
           // check if we can ask for permissions
           getNotificationStatus(completion: { status in
-              if (status == self.permissionUnknown) {
+              if (status == self.permissionUnknown || status == self.permissionProvisional) {
 				  if #available(iOS 10.0, *) {
 					  let center = UNUserNotificationCenter.current()
 					  var options = UNAuthorizationOptions()
@@ -111,6 +112,10 @@ public class SwiftNotificationPermissionsPlugin: NSObject, FlutterPlugin {
                   completion(self.permissionDenied)
               } else if settings.authorizationStatus == .authorized {
                   completion(self.permissionGranted)
+              } else if #available(iOS 12.0, *){
+                  if (settings.authorizationStatus == .provisional){
+                      completion(self.permissionProvisional)
+                  }
               }
           })
       } else {
